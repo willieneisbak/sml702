@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{fullpage}
+
+\title{SML 10/36-702: HW 2}
+\author{Willie Neiswanger\\
+\texttt{willie@cs.cmu.edu}}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1}
+\label{sec:prob1}
+We aim to bound the bias. We can write the bias as:
+\begin{equation*}
+    \begin{split}
+        \text{bias} 
+        &= \mathbb{E}\left[\hat{p}_h(0)\right] - p(0) = 
+            \frac{1}{h} \int_t K(t/h)(p(t)-p(0)) \\
+        &= \frac{1}{h} \left( -\int_{-\infty}^0 K(t/h)p(0) + \int_0^1 K(t/h)(p(t)-p(0)) - \int_1^{\infty}K(t/h)p(0) \right) \\
+        &= \frac{1}{h} \int_t K(t/h)(p(t)-p(0))
+    \end{split}
+\end{equation*}
+
+We can make the substitution:
+
+We find that this converges to:
+
+\section*{Problem 2}
+\label{sec:prob2}
+
+\subsection*{2a}
+
+\subsection*{2b}
+
+\subsection*{2c}
+
+\subsection*{2d}
+
+
+\section*{Problem 3}
+\label{sec:prob3}
+
+
+\section*{Problem 4}
+\label{sec:prob4}
+
+
+\section*{Problem 5}
+\label{sec:prob5}
+
+
+\end{document}
