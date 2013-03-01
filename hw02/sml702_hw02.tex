@@ -7,10 +7,17 @@
 \title{SML 10/36-702: HW 2}
 \author{Willie Neiswanger\\
 \texttt{willie@cs.cmu.edu}}
+\date{}
 
 \begin{document}
 
 \maketitle
+
+\begin{small}
+\noindent Collaborators: Peter Schulam, Slav Kirov, Nicole Rafidi, Aravindh Mahendran, George Montanez, Kirstin Early, Micol Marchetti-Bowick, Dai
+Wei, Alex Loewi, Sam Thomson, Ben Cowley
+\end{small}
+
 
 \section*{Problem 1}
 \label{sec:prob1}
@@ -128,18 +135,36 @@ equality plugged in the optimal $h = cn^{-1/5}$. Hence by Slutsky's Thm,
 \end{equation}
 
 \subsection*{2d}
-
+The $z_{\alpha/2}$ in the confidence interval carries the assumption that 
+$\frac{\hat{p}_h(x) - p(x)}{\hat{\text{se}_n(x)}}$ $\rightsquigarrow$ $\text{N}(0,1)$, 
+but since it converges to $\text{N}(b(x),1)$, this does not hold.
 
 \section*{Problem 3}
 \label{sec:prob3}
-Note that $\hat{m}_{(-1)}(x) = \frac{1}{1 - l_i(x_i)} \sum_{j \neq i}y_j l_j(x_j) = \frac{1}{1 - l_i(x_i)}\left( \hat{m}(x_i) - y_i l_i(x_i) \right)$
+Note that $\hat{m}_{(-1)}(x) = \frac{1}{1 - l_i(x)} \sum_{j \neq i}Y_j l_j(x) = \frac{1}{1 - l_i(x)}\left( \hat{m}(x) - Y_i l_i(x) \right)$.
 Then
 \begin{equation}
-    \frac{1}{n}\sum_{i=1}^n(Y_i - \hat{m}_{(-i)}(X_i))^2 = 
+    \begin{split}
+        \frac{1}{n}\sum_{i=1}^n \left( Y_i - \hat{m}_{(-i)}(X_i) \right)^2 
+        &= \frac{1}{n}\sum_{i=1}^n 
+            \left(Y_i - \frac{1}{1 - l_i(X_i)}\left( \hat{m}(X_i) - Y_i l_i(X_i) \right) \right)^2 \\
+        &= \frac{1}{n}\sum_{i=1}^n \left( \frac{Y_i(1 - l_i(X_i))  - \hat{m}(X_i) + Y_i l_i(X_i)}{1-l_i(X_i)}  \right)^2 \\
+        &= \frac{1}{n}\sum_{i=1}^n \left( \frac{Y_i  - \hat{m}(X_i)}{1-l_i(X_i)}  \right)^2
+    \end{split}
 \end{equation}
 
 \section*{Problem 4}
 \label{sec:prob4}
+The Riesz representation theorem can be stated as: if $\alpha \in \mathcal{H}^{*}$
+(for Hilbert space $\mathcal{H}$) then there is a unique vector 
+$f_{\alpha} \in \mathcal{H}$ such that $\forall g \in \mathcal{H}$, $\alpha(g) = \langle f_{\alpha}, g \rangle_{\mathcal{H}}$.
+
+Therefore, if we assume $\delta_x$ continuous for Hilbert space $\mathcal{H}$,
+then $\delta_x \in \mathcal{H}^{*}$, and so 
+there exists $f_x \in \mathcal{H}$, such that for all $f \in \mathcal{H}$,
+$\langle f, f_x \rangle_{\mathcal{H}} = \delta_x(f) = f(x)$. This makes 
+$\mathcal{H}$ satisfy the properties of an RKHS, where we take the kernel 
+to be  $K(x,y) = f_x(y) = \delta_y(f_x)$.
 
 
 \end{document}
