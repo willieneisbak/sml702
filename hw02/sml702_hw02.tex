@@ -14,29 +14,118 @@
 
 \section*{Problem 1}
 \label{sec:prob1}
-We aim to bound the bias. We can write the bias as:
+We aim to bound the bias, which we can write as
+\begin{equation}
+    \begin{split}
+        | \text{bias} |
+        &= | \mathbb{E}\left[\hat{p}_h(0)\right] - p(0) | 
+            = \left| \frac{1}{h} \int_{-\infty}^{\infty} K(t/h)(p(t)-p(0)) \right| \\
+        &\leq  \left| p(0) \int_{-\infty}^0 \frac{1}{h} K(t/h) \right|
+            + \left| \frac{1}{h} \int_0^1 K(t/h)(p(t)-p(0)) \right|
+            + \left| p(0) \int_1^{\infty} \frac{1}{h} K(t/h) \right| \\
+    \end{split}
+\end{equation}
+where we've used the triangle inequality and the fact that $p(x)=0$ when $x<0$ and $x>1$. There are
+three terms on the right hand side. The first equals $|\frac{1}{2}p(0)|$, since 
+$\int_{-\infty}^{\infty} \frac{1}{h} K(t/h) = 1$. Note that the third term tends to 0 as
+$h \rightarrow 0$, since the kernel concentrates around 0 and the integral is from 1 to $\infty$.
+We can bound the third term with
 \begin{equation*}
     \begin{split}
-        \text{bias} 
-        &= \mathbb{E}\left[\hat{p}_h(0)\right] - p(0) = 
-            \frac{1}{h} \int_t K(t/h)(p(t)-p(0)) \\
-        &= \frac{1}{h} \left( -\int_{-\infty}^0 K(t/h)p(0) + \int_0^1 K(t/h)(p(t)-p(0)) - \int_1^{\infty}K(t/h)p(0) \right) \\
-        &= \frac{1}{h} \int_t K(t/h)(p(t)-p(0))
+        %| \text{bias} |
+        %&= | \mathbb{E}\left[\hat{p}_h(0)\right] - p(0) | 
+            %= 
+        &\left| \frac{1}{h} \int_0^1 K(t/h)(p(t)-p(0)) \right| \\
+        &\leq \frac{1}{h}\int_0^1 K(t/h) |p(t) - (p(0) + tp'(0))|dt
+            + \frac{1}{h}\int_0^1 K(t/h) |-p(0) + (p(0) + tp'(0))|dt \\
+        &(\text{by the triangle inequality})\\
+        &\leq \frac{1}{h}\int_0^1 K(t/h) |(p'(\xi) - p'(0)) t| dt
+            + \frac{1}{h}\int_0^1 K(t/h) |t p'(0)| dt \\
+            &(\text{since } p(t) = p(0) + tp'(\xi) \text{ via Taylor's}, \text{ where }\xi \in (0,t))\\
+        &\leq \left( \frac{L+p'(0)}{h} \right) \int_0^1 K(t/h) t dt \\
+        &(\text{since } |(p'(\xi) - p'(0)) t| < L\xi < L, \text{ as } 0 \leq \xi \leq t, \text{ and } t \leq 1) \\
+        &= \frac{h(L+p'(0))}{\sqrt{2\pi}} \left(1 - \text{exp}\left(-\frac{1}{2h^2}\right) \right)
     \end{split}
 \end{equation*}
+Additionally, as $n \rightarrow \infty$, the risk optimal bandwidth $h \rightarrow 0$, and so 
+\begin{equation}
+    \left| \frac{1}{h} \int_0^1 K(t/h)(p(t)-p(0)) \right|
+    \leq \frac{h(L+p'(0))}{\sqrt{2\pi}} \left(1 - \text{exp}\left(-\frac{1}{2h^2}\right) \right) 
+    \rightarrow 0
+\end{equation}
+Hence, as $h \rightarrow 0$, $|\text{bias}| \rightarrow |\frac{1}{2}p_0|$.
 
-We can make the substitution:
-
-We find that this converges to:
 
 \section*{Problem 2}
 \label{sec:prob2}
 
 \subsection*{2a}
+We want to show that, $\forall \epsilon > 0$,
+$\lim_{n \rightarrow \infty} \mathbb{P} \left( \left| \hat{p}_h(x) - p(x) \right| 
+    > \epsilon \right)$ $=$ $0$. Note that, by the triangle inequality,
+\begin{equation*}
+    \begin{split}
+        \mathbb{P} \left( \left| \hat{p}_h(x) - p(x) \right| > \epsilon \right)
+        &\leq  \mathbb{P} \left( \left| \hat{p}_h(x) - \mathbb{E}[\hat{p}_h(x)] \right| + 
+                \left| \mathbb{E}[\hat{p}_h(x)] - p(x) \right| > \epsilon \right) \\
+            &\leq  \mathbb{P} \left( \left| \hat{p}_h(x) - \mathbb{E}[\hat{p}_h(x)] \right| > \epsilon/2 \right)
+                + \mathbb{P} \left( \left| \mathbb{E}[\hat{p}_h(x)] - p(x) \right| > \epsilon/2 \right)
+    \end{split}
+\end{equation*}
+where for the first term in the right hand side of this inequality (ie the bias) is bounded with
+\begin{equation}
+    \mathbb{P} \left( \left| \hat{p}_h(x) - \mathbb{E}[\hat{p}_h(x)] \right| > \epsilon/2 \right)
+        \leq 2 \text{exp} \left[-cnh^d\epsilon^2/4\right]
+        \rightarrow 0
+\end{equation}
+for some $c$, as $n \rightarrow \infty$ (and $h = h_n \rightarrow 0$), using Thm 24.26. The second term in the right hand side
+ of the above inequality, $\mathbb{P} \left( \left| \mathbb{E}[\hat{p}_h(x)] - p(x) \right| > \epsilon/2 \right)$,
+ is the probability that an expectation will be within $\epsilon/2$ of a true value and therefore 
+ tends to zero, since $\mathbb{E}[\hat{p}_h(x)] \rightarrow p(x)$.
 
 \subsection*{2b}
+We first want to show that $\frac{\hat{\text{se}}_n(x)}{\text{se}_n(x)} \xrightarrow{p} 1$. Equivalently,
+we'd like to show that $\lim_{n \rightarrow \infty} \mathbb{P}(\frac{s^2}{n} - \text{Var}[\hat{p}_n(x)] > \epsilon)$
+$=$ $0$. Note that by Markov's inequality
+\begin{equation*}
+    \begin{split}
+        \mathbb{P} \left( \left| \frac{s^2}{n} - \text{Var}[\hat{p}_n(x)] \right| > \epsilon \right)
+            \leq \frac{1}{\epsilon} \mathbb{E} \left[ \left| \frac{s^2}{n} - \text{Var}[\hat{p}_n(x)] \right| \right]
+            = \frac{1}{n\epsilon}\mathbb{E} \left[ \left| s^2 - \text{Var}[z_i] \right| \right]
+    \end{split}
+\end{equation*}
+And $\left| s^2 - \text{Var}[z_i] \right| \in o(n)$, so 
+$\lim_{n \rightarrow \infty}\frac{1}{n\epsilon}\mathbb{E} \left[ \left| s^2 - \text{Var}[z_i] \right| \right]$ $=$ $0$,
+which completes the proof that $\frac{\hat{\text{se}}_n(x)}{\text{se}_n(x)} \xrightarrow{p} 1$.
+
+Next, we want to show that $\frac{\hat{p}_h(x) - p_h(x)}{\hat{\text{se}}_n(x)} \rightsquigarrow \text{N}(0,1)$. First, we denote $\hat{\text{se}}_n(x) \stackrel{p}{\approx} \text{se}_n(x)$ if $\frac{\hat{\text{se}}_n(x)}{\text{se}_n(x)} \xrightarrow{p} 1$. From the previous part, we know that
+\begin{equation*}
+    \begin{split}
+        \hat{\text{se}}_n(x) \stackrel{p}{\approx} \text{se}_n(x) 
+            &\implies \frac{\hat{p}_h(x) - p_h(x)}{\hat{\text{se}}_n(x)} \stackrel{p}{\approx} \frac{\hat{p}_h(x) - p_h(x)}{\text{se}_n(x)}
+            \rightsquigarrow \text{N}(0,1)\\
+        &\implies \frac{\hat{p}_h(x) - p_h(x)}{\hat{\text{se}}_n(x)} \rightsquigarrow \text{N}(0,1)
+    \end{split}
+\end{equation*}
+where we've used the fact that convergence in probability implies convergence in distribution.
 
 \subsection*{2c}
+To prove this, we note that
+\begin{equation}
+    \frac{\hat{p}_h(x) - p(x)}{\text{se}_n(x)}
+        = \frac{\hat{p}_h(x) - p_h(x) + p_h(x) + p(x)}{\text{se}_n(x)}
+        = \frac{\hat{p}_h(x) - p_h(x)}{\text{se}_n(x)} + \frac{p_h(x) - p(x)}{\text{se}_n(x)}
+\end{equation}
+First, we are given that $\frac{\hat{p}_h(x) - p_h(x)}{\text{se}_n(x)} \rightsquigarrow \text{N}(0,1)$. Second, we see that
+\begin{equation}
+    \frac{p_h(x) - p(x)}{\text{se}_n(x)} = \frac{ch^2}{\sqrt{i/nh}} = c\sqrt{n}h^{5/2} = c\sqrt{n}\left(cn^{-1/5}\right)^{5/2} = c = b(x)
+\end{equation}
+where we have used a bound on the bias (Lemma 24.19), a bound on the variance (Lemma 24.21), and in the second to last 
+equality plugged in the optimal $h = cn^{-1/5}$. Hence by Slutsky's Thm, 
+\begin{equation}
+    \frac{\hat{p}_h(x) - p_h(x)}{\text{se}_n(x)} + \frac{p_h(x) - p(x)}{\text{se}_n(x)}
+    \rightsquigarrow \text{N}(0,1) + b(x) = \text{N}(b(x),1)
+\end{equation}
 
 \subsection*{2d}
 
@@ -47,10 +136,6 @@ We find that this converges to:
 
 \section*{Problem 4}
 \label{sec:prob4}
-
-
-\section*{Problem 5}
-\label{sec:prob5}
 
 
 \end{document}
