@@ -15,29 +15,29 @@
 %--------------------------------------------------------
 
 \begin{document}
+    %The \textbf{mean} or \textbf{expected value} of $g(X)$ is
+    %\begin{equation}
+    %\mathbb{E}(g(X)) = \int g(x)dF(x) = \int g(x)dP(x)
+    %\end{equation}
+    %Related properties and definitions:
+\section*{SML 10/36-702 Cheatsheet}
 
-\subsection*{Expected Values}
-    The \textbf{mean} or \textbf{expected value} of $g(X)$ is
-    \begin{equation}
-    \mathbb{E}(g(X)) = \int g(x)dF(x) = \int g(x)dP(x)
-    \end{equation}
-    Related properties and definitions:
+%\subsection*{Expected Value Related}
+    \textbf{Some Expectation-related Defs and Properties}
     \begin{flalign}
-    (a)& \hspace{2mm} \mu = \mathbb{E}(X) \\
-    (b)& \hspace{2mm} \mathbb{E}(\sum_{i} c_{i}g_{i}(X_{i})) = \sum_{i} c_{i} \mathbb{E}(g_{i}(X_{i})) \\
-    (c)& \hspace{2mm} \mathbb{E}\left(\prod_{i} X_{i} \right) = \prod_{i} \mathbb{E}(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
-    (d)& \hspace{2mm} Var(X) = \sigma^{2} = \mathbb{E}((X-\mu)^{2}) \hspace{4mm} \text{is the \textbf{variance} of X} \\
-    (e)& \hspace{2mm} Var(X) = \mathbb{E}(X^{2}) - \mu^{2} \\
-    (f)& \hspace{2mm} Var \left (\sum_{i} a_{i}X_{i} \right ) = \sum_{i} a_{i}^{2} Var(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
-    (g)& \hspace{2mm} Cov(X,Y) = \mathbb{E}((X-\mu_{X})(Y-\mu_{Y})) \hspace{2mm} \text{is the \textbf{covariance}} \\
-    (h)& \hspace{2mm} Cov(X,Y) = \mathbb{E}(XY) - \mu_{x}\mu_{Y} \\
-    (i)& \hspace{2mm} \rho(X,Y) = Cov(X,Y) / \sigma_{x}\sigma_{y}, \hspace{4mm} -1 \leq \rho(X,Y) \leq 1
+        (a)& \hspace{2mm} \mathbb{E}(g(X)) = \int g(x)dP(x), \hspace{2mm} \mu = \mathbb{E}(X)\\
+        (b)& \hspace{2mm} \mathbb{E}\left(\sum_{i} c_{i}g_{i}(X_{i})\right) = \sum_{i} c_{i} \mathbb{E}(g_{i}(X_{i})) \\
+        (c)& \hspace{2mm} \mathbb{E}\left(\prod_{i} X_{i} \right) = \prod_{i} \mathbb{E}(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
+        (d)& \hspace{2mm} Var(X) = \sigma^{2} = \mathbb{E}\left((X-\mu)^{2}\right) = \mathbb{E}\left(X^{2}\right) - \mu^{2}\\
+        (e)& \hspace{2mm} Var \left (\sum_{i} a_{i}X_{i} \right ) = \sum_{i} a_{i}^{2} Var(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
+        (f)& \hspace{2mm} Cov(X,Y) = \mathbb{E}((X-\mu_{X})(Y-\mu_{Y})) \hspace{2mm} \text{is the \textbf{covariance}} \\
+        (g)& \hspace{2mm} Cov(X,Y) = \mathbb{E}(XY) - \mu_{x}\mu_{Y} \\
+        (h)& \hspace{2mm} \rho(X,Y) = Cov(X,Y) / \sigma_{x}\sigma_{y}, \hspace{4mm} -1 \leq \rho(X,Y) \leq 1
     \end{flalign}
     The \textbf{conditional expectation} of Y given X is the random variable $g(X) = \mathbb{E}(Y|X)$, where
-    \begin{gather}
-    \mathbb{E}(Y|X=x) = \int y f(y|x)dy\\
-    \text{and} \hspace{2mm} f(y|x) = f_{X,Y}(x,y) / f_{X}(x)
-    \end{gather}
+    \begin{equation}
+        \mathbb{E}(Y|X=x) = \int y f(y|x)dy, \hspace{3mm} f(y|x) = f_{X,Y}(x,y) / f_{X}(x)
+    \end{equation}
     The \emph{Law of Total/Iterated Expectation} is
     \begin{equation}
     \mathbb{E}(Y) = \mathbb{E}[\mathbb{E}(Y|X)]
@@ -46,11 +46,6 @@
     \begin{equation}
     Var(Y) = Var[\mathbb{E}(Y|X)] + \mathbb{E}[Var(Y|X)]
     \end{equation}
-    The \emph{Law of Total Covariance} is
-    \begin{equation}
-    Cov(X,Y) = \mathbb{E}(Cov(X,Y|Z)) + Cov(\mathbb{E}(X|Z), \mathbb{E}(Y|Z))
-    \end{equation}
-
 
 \subsection*{Concentration of Measure}
     \textbf{Thm (Gaussian Tail Inequality):}
@@ -88,13 +83,13 @@
     \textbf{Thm (Hoeffding's Inequality):}
     $X_{1},\ldots,X_{n}$ iid, $a \leq X_{i} \leq b$. Then $\forall \epsilon >0$
     \begin{equation}
-        \mathbb{P}(|\overline{X} - \mathbb{E}(\overline{X})| \geq \epsilon) \leq 2e^{-2n\epsilon^{2}/(b-a)^{2}}
+        \mathbb{P} \left(\left| \overline{X} - \mathbb{E}\left(\overline{X}\right) \right| \geq \epsilon \right) \leq 2e^{-2n\epsilon^{2}/(b-a)^{2}}
     \end{equation}
 
     \textbf{Thm (Bernstein's Inequality):}
     $X_{1},\ldots,X_{n}$ iid, $-c \leq X_{i} \leq c$, $\sigma^2 = \frac{1}{n}\sum_i \text{Var}(X_i)$. Then $\forall \epsilon >0$
     \begin{equation}
-        \mathbb{P}(|\overline{X} - \mathbb{E}(\overline{X})| \geq \epsilon) \leq 2e^{-n\epsilon^2/(2\sigma^2 + 2c\epsilon/3)}
+        \mathbb{P} \left(\left| \overline{X} - \mathbb{E}\left(\overline{X}\right) \right| \geq \epsilon \right) \leq 2e^{-n\epsilon^2/(2\sigma^2 + 2c\epsilon/3)}
     \end{equation}
 
     \textbf{Thm (McDiarmid):} $X_{1},\ldots,X_{n}$ indep't. If\\
@@ -104,13 +99,19 @@
     \end{equation}
     where $g_{i}^{*} = g$ with $x_{i}$ replaced by $x'_{i}$.
 
-\subsection*{VC Dimension and Uniform Bounds}
-    $F$ a finite set, $|F| = n$, and $G \subset F$. $\mathcal{A}$ is a class of sets.\\
-    $\mathcal{A}$ \textbf{picks out} $G$ if $\exists A \in \mathcal{A}$ s.t. $A \cap F = G$.\\
-    Let $S(\mathcal{A},F)$ $=$ $\#\{G \subset F \text{ picked out by } \mathcal{A}\}$ $\leq 2^{n}$.\\
-    $F$ is \textbf{shattered} by $\mathcal{A}$ if $S(\mathcal{A},F) = 2^{n}$ (ie if $\mathcal{A}$ picks out all $G \subset F$).\\
-    Let $\mathcal{F}_{n}$ be all finite sets with $n$ elements.\\
-    The \textbf{shatter coefficient} $s(\mathcal{A},n) = \sup_{F \in \mathcal{F}_{n}} S(\mathcal{A},F) \leq 2^{n}$.\\
+\subsection*{Uniform Bounds}
+    The \textbf{union bound} is 
+    \begin{equation}
+        \mathbb{P} \left( \sup_{f \in \mathcal{F}} \left| \hat{R} - R  \right| > \epsilon \right) 
+            \leq |\mathcal{F}| e^{\text{something}}
+    \end{equation}
+    \textbf{VC Theory:}
+    $F$ a finite set, $|F| = n$, and $G \subset F$. $\mathcal{A}$ is a class of sets.
+    $\mathcal{A}$ \textbf{picks out} $G$ if $\exists A \in \mathcal{A}$ s.t. $A \cap F = G$.
+    Let $S(\mathcal{A},F)$ $=$ $\#\{G \subset F \text{ picked out by } \mathcal{A}\}$ $\leq 2^{n}$.
+    $F$ is \textbf{shattered} by $\mathcal{A}$ if $S(\mathcal{A},F) = 2^{n}$ (ie if $\mathcal{A}$ picks out all $G \subset F$).
+    Let $\mathcal{F}_{n}$ be all finite sets with $n$ elements.
+    The \textbf{shatter coefficient} $s(\mathcal{A},n) = \sup_{F \in \mathcal{F}_{n}} S(\mathcal{A},F) \leq 2^{n}$.
     The \textbf{VC dimension} $d(\mathcal{A}) =$ the largest $n$ s.t. $s(\mathcal{A},n) = 2^{n}$.\\
     \textbf{Thm (Vapnik and Chervonenkis):} $\forall t>\sqrt{2/n}$, 
     \begin{equation}
@@ -122,7 +123,7 @@
     \begin{equation}
         \text{Rad}_n(\mathcal{F}) = \mathbb{E} \left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_i \sigma_i f(Z_i)  \right|  \right)
     \end{equation}
-    and the expectation is over $\sigma$ only.\\
+    where the expectation is over $\sigma$ only.\\
     \textbf{Thm:} With probability $\geq 1-\delta$
     \begin{equation}
         \sup_{f \in \mathcal{F}} \left| P_n(f) - P(f)  \right|
@@ -153,8 +154,25 @@
         if $\alpha \in \mathbb{Z}$, $0 < \beta < 1$.
 
 \subsection*{Density estimation}
-    Histogram density estimator\\
-    Kernel density estimator\\
+    The goal is to estimate $p(x)$ with estimator $\hat{p}(x) = \hat{p}_h(x)$. \\
+    The \textbf{$L_2$ loss} $= \int \left( \hat{p}(x) - p(x) \right)^2 dx$.
+    The \textbf{risk} $R(p,\hat{p})$ $=$ $\mathbb{E}(L(p,\hat{p}))$.
+
+    The \textbf{histogram density estimator} is 
+        $\hat{p}_h(x)$ $=$ $\sum_{j=1}^N \frac{\hat{\theta}_j}{h^d} \mathbb{I}(x \in B_j)$
+        where $\hat{\theta}_j = \frac{1}{n} \sum_{i=1}^n \mathbb{I}(X_i \in B_j)$.\\
+    The \textbf{kernel density estimator} is 
+    $\hat{p}_h(x)$ $=$ $\frac{1}{n} \sum_{i=1}^n \frac{1}{h^d} K \left( \frac{\| x-X_i \|}{h}  \right).$
+    E.g. \emph{Gaussian kernel} $K(x)$ $=$ $\frac{1}{\sqrt{2\pi}} e^{-x^2/2}$.\\
+    %Let $p_h(x) = \mathbb{E}(\hat{p}_h(x))$.\\
+    \textbf{Lemma (kde bias bound):} for some $c$, 
+    \begin{equation}
+        \sup_{p \in H_{\beta}(L)} |\mathbb{E}\left(\hat{p}_h(x)\right) - p(x)| \leq ch^{\beta}
+    \end{equation}
+    \textbf{Lemma (kde variance bound):} for some $c>0$, 
+    \begin{equation}
+        \sup_{p \in H_{\beta}(L)} \text{Var}(\hat{p}_h(x)) \leq \frac{c}{nh^d}
+    \end{equation}
     holder class, bias, variance, risk, concentration
 
 \subsection*{Nonparametric Classification}
