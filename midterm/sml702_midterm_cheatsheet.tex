@@ -1,0 +1,132 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.2in]{geometry}
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1.5ex}{1ex}
+\titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
+\usepackage{amsmath,amsthm,amssymb,MnSymbol}
+\setlength{\parindent}{0in}
+\renewenvironment{proof}{{\bfseries Proof}}{\\}
+\newcommand{\newlinetab}[0]{$\text{ }\hspace{3mm}$}
+
+%--------------------------------------------------------
+% Statistical Machine Learning 702 Cheatsheet for Midterm
+%--------------------------------------------------------
+
+\begin{document}
+
+\subsection*{Expected Values}
+    The \textbf{mean} or \textbf{expected value} of $g(X)$ is
+    \begin{equation}
+    \mathbb{E}(g(X)) = \int g(x)dF(x) = \int g(x)dP(x)
+    \end{equation}
+    Related properties and definitions:
+    \begin{flalign}
+    (a)& \hspace{2mm} \mu = \mathbb{E}(X) \\
+    (b)& \hspace{2mm} \mathbb{E}(\sum_{i} c_{i}g_{i}(X_{i})) = \sum_{i} c_{i} \mathbb{E}(g_{i}(X_{i})) \\
+    (c)& \hspace{2mm} \mathbb{E}\left(\prod_{i} X_{i} \right) = \prod_{i} \mathbb{E}(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
+    (d)& \hspace{2mm} Var(X) = \sigma^{2} = \mathbb{E}((X-\mu)^{2}) \hspace{4mm} \text{is the \textbf{variance} of X} \\
+    (e)& \hspace{2mm} Var(X) = \mathbb{E}(X^{2}) - \mu^{2} \\
+    (f)& \hspace{2mm} Var \left (\sum_{i} a_{i}X_{i} \right ) = \sum_{i} a_{i}^{2} Var(X_{i}), \hspace{4mm} X_{1}, \ldots, X_{n} \text{ indep't} \\
+    (g)& \hspace{2mm} Cov(X,Y) = \mathbb{E}((X-\mu_{X})(Y-\mu_{Y})) \hspace{2mm} \text{is the \textbf{covariance}} \\
+    (h)& \hspace{2mm} Cov(X,Y) = \mathbb{E}(XY) - \mu_{x}\mu_{Y} \\
+    (i)& \hspace{2mm} \rho(X,Y) = Cov(X,Y) / \sigma_{x}\sigma_{y}, \hspace{4mm} -1 \leq \rho(X,Y) \leq 1
+    \end{flalign}
+    The \textbf{conditional expectation} of Y given X is the random variable $g(X) = \mathbb{E}(Y|X)$, where
+    \begin{gather}
+    \mathbb{E}(Y|X=x) = \int y f(y|x)dy\\
+    \text{and} \hspace{2mm} f(y|x) = f_{X,Y}(x,y) / f_{X}(x)
+    \end{gather}
+    The \emph{Law of Total/Iterated Expectation} is
+    \begin{equation}
+    \mathbb{E}(Y) = \mathbb{E}[\mathbb{E}(Y|X)]
+    \end{equation}
+    The \emph{Law of Total Variance} is
+    \begin{equation}
+    Var(Y) = Var[\mathbb{E}(Y|X)] + \mathbb{E}[Var(Y|X)]
+    \end{equation}
+    The \emph{Law of Total Covariance} is
+    \begin{equation}
+    Cov(X,Y) = \mathbb{E}(Cov(X,Y|Z)) + Cov(\mathbb{E}(X|Z), \mathbb{E}(Y|Z))
+    \end{equation}
+
+
+\subsection*{Concentration of Measure}
+    \textbf{Thm (Gaussian Tail Inequality):}
+    Let $X \sim \mathcal{N}(0,1)$. Then
+    \begin{equation}
+        \mathbb{P}(|X| > \epsilon) \leq \frac{2}{\epsilon}e^{-\epsilon^{2}/2} \hspace{2mm}\text{ and } \hspace{2mm}
+        \mathbb{P}(|\overline{X}_{n}| > \epsilon) \leq \frac{1}{\sqrt{n}\epsilon}e^{-n\epsilon^{2}/2}
+    \end{equation}
+        
+    \textbf{Thm (Markov Inequality):}
+    Let X be a non-negative random variable s.t. $\mathbb{E}(X)$ exists. Then $\forall$ $t>0$
+    \begin{equation}
+        \mathbb{P}(X>t) \leq \frac{\mathbb{E}(X)}{t}
+    \end{equation}
+
+    \textbf{Thm (Chebyshev's Inequality):}
+    Let $\mu = \mathbb{E}(X)$ and $\sigma^{2} = \text{Var}(X)$. Then
+    \begin{equation}
+        \mathbb{P}(|X-\mu| \geq t) \leq \frac{\sigma^{2}}{t^{2}} \hspace{2mm} \text{ i.e. } \hspace{2mm}
+        \mathbb{P}(|(X-\mu)/\sigma| \geq t) \leq \frac{1}{t^{2}}
+    \end{equation}
+
+    \textbf{Lemma:}
+    Let $\mathbb{E}(X) = 0$ and $a \leq X \leq b$. Then
+    \begin{equation}
+        \mathbb{E}(e^{tX}) \leq e^{t^{2}(b-a)^{2}/8}
+    \end{equation}
+
+    \textbf{Lemma (Chernoff's Method):}
+    Let $X$ be any random variable. Then $\forall t>0$
+    \begin{equation}
+        \mathbb{P}(X>\epsilon) \leq \mathbb{P}(e^{tX}>e^{t\epsilon}) \leq e^{-t\epsilon} \mathbb{E}(e^{tX})
+    \end{equation}
+
+    \textbf{Thm (Hoeffding's Inequality):}
+    $X_{1},\ldots,X_{n}$ iid, $a \leq X_{i} \leq b$. Then $\forall \epsilon >0$
+    \begin{equation}
+        \mathbb{P}(|\overline{X} - \mathbb{E}(\overline{X})| \geq \epsilon) \leq 2e^{-2n\epsilon^{2}/(b-a)^{2}}
+    \end{equation}
+
+    \textbf{Thm (Bernstein's Inequality):}
+    $X_{1},\ldots,X_{n}$ iid, $-c \leq X_{i} \leq c$, $\sigma^2 = \frac{1}{n}\sum_i \text{Var}(X_i)$. Then $\forall \epsilon >0$
+    \begin{equation}
+        \mathbb{P}(|\overline{X} - \mathbb{E}(\overline{X})| \geq \epsilon) \leq 2e^{-n\epsilon^2/(2\sigma^2 + 2c\epsilon/3)}
+    \end{equation}
+
+    \textbf{Thm (McDiarmid):} $X_{1},\ldots,X_{n}$ indep't. If\\
+    $\sup_{x_{1},\ldots,x_{n},x'_{i}} \left| g(x_{1},\ldots,x_{n}) - g_{i}^{*}(x_{1},\ldots,x_{n}) \right|$ $\leq c_{i}$ holds $\forall i$ $\implies$
+    \begin{equation}
+        \mathbb{P} \left(\left| g(X_{1},\ldots,X_{n})-\mathbb{E}(g(X_{1},\ldots,X_{n})) \right| \geq \epsilon \right) \leq 2e^{-2\epsilon^{2}/\sum_{i}c_{i}^{2}}
+    \end{equation}
+    where $g_{i}^{*} = g$ with $x_{i}$ replaced by $x'_{i}$.
+
+\subsection*{VC Dimension and Uniform Bounds}
+    $F$ a finite set, $|F| = n$, and $G \subset F$. $\mathcal{A}$ is a class of sets.\\
+    $\mathcal{A}$ \textbf{picks out} $G$ if $\exists A \in \mathcal{A}$ s.t. $A \cap F = G$.\\
+    Let $S(\mathcal{A},F)$ $=$ $\#\{G \subset F \text{ picked out by } \mathcal{A}\}$ $\leq 2^{n}$.\\
+    $F$ is \textbf{shattered} by $\mathcal{A}$ if $S(\mathcal{A},F) = 2^{n}$ (ie if $\mathcal{A}$ picks out all $G \subset F$).\\
+    Let $\mathcal{F}_{n}$ be all finite sets with $n$ elements.\\
+    The \textbf{shatter coefficient} $s(\mathcal{A},n) = \sup_{F \in \mathcal{F}_{n}} S(\mathcal{A},F) \leq 2^{n}$.\\
+    The \textbf{VC dimension} $d(\mathcal{A}) =$ the largest $n$ s.t. $s(\mathcal{A},n) = 2^{n}$.\\
+    \textbf{Thm (Vapnik and Chervonenkis):} $\forall t>\sqrt{2/n}$, 
+    \begin{equation}
+        \mathbb{P} \left( \sup_{A \in \mathcal{A}} |P_{n}(A) - P(A)| > t \right) \leq 4 s(\mathcal{A},2n)e^{-nt^{2}/8}
+    \end{equation}
+    \textbf{Rademacher Complexity:} Assume $\mathcal{F}$ a class of functions s.t. $0 \leq f(z) \leq 1, \forall f \in \mathcal{F}$.
+    $\sigma_1,\ldots,\sigma_n$ are \emph{Rademacher random variables} if they are iid and $\mathbb{P}(\sigma_i=1) = \mathbb{P}(\sigma_i=-1) = 1/2$.
+    Then the \emph{Rademacher complexity} of $\mathcal{F}$ is:
+    \begin{equation}
+        \text{Rad}_n(\mathcal{F}) = \mathbb{E} \left( \sup_{f \in \mathcal{F}} \left| \frac{1}{n} \sum_i \sigma_i f(Z_i)  \right|  \right)
+    \end{equation}
+    and the expectation is over $\sigma$ only.\\
+    \textbf{Thm:} With probability $\geq 1-\delta$
+    \begin{equation}
+        \sup_{f \in \mathcal{F}} \left| P_n(f) - P(f)  \right|
+            \leq 2\text{Rad}_n(\mathcal{F}) + \sqrt{\frac{1}{2n} \text{log} \left( \frac{2}{\delta} \right)}
+    \end{equation}
+
+\end{document}
