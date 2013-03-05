@@ -129,4 +129,43 @@
             \leq 2\text{Rad}_n(\mathcal{F}) + \sqrt{\frac{1}{2n} \text{log} \left( \frac{2}{\delta} \right)}
     \end{equation}
 
+\subsection*{Function Spaces}
+    A \textbf{vector space} is closed under addition and scalar multiplication. 
+    A vector space of functions is a \textbf{function space}. 
+    A normed space is \textbf{complete} if every \emph{Cauchy sequence} converges to a limit. 
+    A complete, normed space is a \textbf{Banach space}. 
+    A complete, inner product space is a \textbf{Hilbert space}.% (also a normed space).
+    A Hilbert space is \textbf{separable} if there exists a countable orthonormal basis.
+
+    Let $\mathcal{F}$ be a set of functions $f:[a,b] \rightarrow \mathbb{R}$.  
+    The \textbf{$L_p$ norm} on $\mathcal{F}$ is $\| f \|_p = \left( \int_a^b |f(x)|^p dx  \right)^{1/p}$\hspace{-2mm}. 
+    The space $L_p(a,b)$ $=$ $\left\{  f : \| f \|_p < \infty \right\} \subset \mathcal{F}$.
+    $L_2(a,b)$ with inner product $\int_a^b f(x)g(x) dx$ is a separable Hilbert space.
+
+    A fn $f$ is \textbf{weakly diff'able} if $\exists f'$ s.t. $\int_x^y f'(s) ds = f(y) - f(x)$.
+    Let $D^jf$ denote the $j^{\text{th}}$ weak derivative of $f$.
+    The \textbf{Sobolev space} of order $m$ is $W_{m,p}$ $=$ $\left\{ f \in L_p(0,1) : \|D^m f\| \in L_p(0,1) \right\}$.
+
+    \textbf{Lipschitz space:} $\text{Lip}(c)$ $=$ $\left\{ f : \sup_x |f(x)| \leq c, \sup_{x,y} \frac{|f(y)-f(x)|}{|y-x|} \right\}$
+    \textbf{Holder space:} $H_{\alpha}(c)$ $=$ $\left\{ f : \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in \text{Lip}(c) \right\}$ 
+        if $\alpha \in \mathbb{Z}$ and\\
+    $H_{\alpha+\beta}(c) = \left\{ f : f \in H_{\alpha}(c), \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in H_{\beta}(c) \right\}$ 
+        if $\alpha \in \mathbb{Z}$, $0 < \beta < 1$.
+
+\subsection*{Density estimation}
+    Histogram density estimator\\
+    Kernel density estimator\\
+    holder class, bias, variance, risk, concentration
+
+\subsection*{Nonparametric Classification}
+    classifiers: plug-in, histogram, decision trees
+
+\subsection*{Nonparametric Regression}
+    regressors: kernel estimators, local polynomials, RKHS estimators
+
+\subsection*{Minimax}
+    Minimax risk definition\\
+    Upper bound risk\\
+    Lower bound risk (Le Cam and Fano)
+
 \end{document}
