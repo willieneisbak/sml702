@@ -5,7 +5,7 @@
 \titlespacing{\section}{0pt}{2ex}{1ex}
 \titlespacing{\subsection}{0pt}{1.5ex}{1ex}
 \titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
-\usepackage{amsmath,amsthm,amssymb,MnSymbol}
+\usepackage{amsmath,amsthm,amssymb,MnSymbol,paralist}
 \setlength{\parindent}{0in}
 \renewenvironment{proof}{{\bfseries Proof}}{\\}
 \newcommand{\newlinetab}[0]{$\text{ }\hspace{3mm}$}
@@ -15,15 +15,10 @@
 %--------------------------------------------------------
 
 \begin{document}
-    %The \textbf{mean} or \textbf{expected value} of $g(X)$ is
-    %\begin{equation}
-    %\mathbb{E}(g(X)) = \int g(x)dF(x) = \int g(x)dP(x)
-    %\end{equation}
-    %Related properties and definitions:
+
 \section*{SML 10/36-702 Cheatsheet}
 
-%\subsection*{Expected Value Related}
-    \textbf{Some Expectation-related Defs and Properties}
+\textbf{Some Expectation-related Defs and Properties}
     \begin{flalign}
         (a)& \hspace{2mm} \mathbb{E}(g(X)) = \int g(x)dP(x), \hspace{2mm} \mu = \mathbb{E}(X)\\
         (b)& \hspace{2mm} \mathbb{E}\left(\sum_{i} c_{i}g_{i}(X_{i})\right) = \sum_{i} c_{i} \mathbb{E}(g_{i}(X_{i})) \\
@@ -100,10 +95,10 @@
     where $g_{i}^{*} = g$ with $x_{i}$ replaced by $x'_{i}$.
 
 \subsection*{Uniform Bounds}
-    The \textbf{union bound} is 
+    For a finite set of binary functions $\mathcal{F} = \{ f_1, \ldots f_N \}$, $\forall \epsilon>0$,
     \begin{equation}
-        \mathbb{P} \left( \sup_{f \in \mathcal{F}} \left| \hat{R} - R  \right| > \epsilon \right) 
-            \leq |\mathcal{F}| e^{\text{something}}
+        \mathbb{P}\left( \max_{f \in \mathcal{F}} |P_n(f) - P(f)| > \epsilon \right) 
+        \leq 2Ne^{-n\epsilon^2/2}
     \end{equation}
     \textbf{VC Theory:}
     $F$ a finite set, $|F| = n$, and $G \subset F$. $\mathcal{A}$ is a class of sets.
@@ -134,11 +129,25 @@
     A \textbf{vector space} is closed under addition and scalar multiplication. 
     A vector space of functions is a \textbf{function space}. 
     A normed space is \textbf{complete} if every \emph{Cauchy sequence} converges to a limit. 
-    A complete, normed space is a \textbf{Banach space}. 
-    A complete, inner product space is a \textbf{Hilbert space}.% (also a normed space).
+    A complete, normed space is a \textbf{Banach space}.\\
+    \textbf{Inner product}: a mapping $\langle\cdot,\cdot\rangle: V \times V \rightarrow \mathbb{R} \; \text{s.t.} \; \forall x,y,z \in V, a \in \mathbb{R}:$
+    \begin{enumerate}
+        \itemsep-.5em
+        \item $\langle x,x \rangle \geq 0, \langle x,x \rangle = 0 \Leftrightarrow x = 0$
+        \item $\langle x,y+z \rangle  = \langle x,y \rangle + \langle x,z \rangle$
+        \item $\langle x, ay \rangle = a\langle x,y \rangle$
+        \item $\langle x,y \rangle = \langle y,x \rangle$.
+    \end{enumerate}
+    \vspace{-3mm}Note that $\|v\| = \sqrt{\langle v,v  \rangle}$.
+
+    A complete, inner product space is a \textbf{Hilbert space}. % (also a normed space).
     A Hilbert space is \textbf{separable} if there exists a countable orthonormal basis.
 
-    Let $\mathcal{F}$ be a set of functions $f:[a,b] \rightarrow \mathbb{R}$.  
+    \textbf{Thm:} If $V$ a separable Hilbert space with countable orthonormal basis 
+        $\{ e_1,e_2,\ldots \}$ $\implies$ $\forall x \in V$, $x = \sum_{j=1}^{\infty}\theta_je_j$, 
+        where $\theta_j = \langle x, e_j \rangle$, and also $||x||^2 = \sum_{j=1}^{\infty}\theta_j^2$.
+
+    Let $\mathcal{F}$ be a set of functions $f:[a,b] \rightarrow \mathbb{R}$.
     The \textbf{$L_p$ norm} on $\mathcal{F}$ is $\| f \|_p = \left( \int_a^b |f(x)|^p dx  \right)^{1/p}$\hspace{-2mm}. 
     The space $L_p(a,b)$ $=$ $\left\{  f : \| f \|_p < \infty \right\} \subset \mathcal{F}$.
     $L_2(a,b)$ with inner product $\int_a^b f(x)g(x) dx$ is a separable Hilbert space.
@@ -148,10 +157,12 @@
     The \textbf{Sobolev space} of order $m$ is $W_{m,p}$ $=$ $\left\{ f \in L_p(0,1) : \|D^m f\| \in L_p(0,1) \right\}$.
 
     \textbf{Lipschitz space:} $\text{Lip}(c)$ $=$ $\left\{ f : \sup_x |f(x)| \leq c, \sup_{x,y} \frac{|f(y)-f(x)|}{|y-x|} \right\}$
-    \textbf{Holder space:} $H_{\alpha}(c)$ $=$ $\left\{ f : \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in \text{Lip}(c) \right\}$ 
-        if $\alpha \in \mathbb{Z}$ and\\
-    $H_{\alpha+\beta}(c) = \left\{ f : f \in H_{\alpha}(c), \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in H_{\beta}(c) \right\}$ 
-        if $\alpha \in \mathbb{Z}$, $0 < \beta < 1$.
+\textbf{Holder space:} for $0<\beta\leq 1$, the \textbf{Holder space} or \textbf{class} is\\
+    $H_{\beta}(c) = \left\{ f : \sup_x |f(x)| \leq c, 
+        \sup_{x,y} \frac{|f(y)-f(x)|}{|y-x|^{\beta}} \leq c \right\}$\\
+    Note if $\alpha \in \mathbb{Z}$, $H_{\alpha}(c)$ $=$ $\left\{ f : \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in \text{Lip}(c) \right\}$ and\\
+    if $\alpha \in \mathbb{Z}$, $0 < \beta < 1$, $H_{\alpha+\beta}(c) 
+        = \left\{ f : f \in H_{\alpha}(c), \frac{\partial^{\alpha} f}{\partial x^{\alpha}} \in H_{\beta}(c) \right\}$
 
 \subsection*{Density estimation}
     The goal is to estimate $p(x)$ with estimator $\hat{p}(x) = \hat{p}_h(x)$. \\
@@ -173,17 +184,98 @@
     \begin{equation}
         \sup_{p \in H_{\beta}(L)} \text{Var}(\hat{p}_h(x)) \leq \frac{c}{nh^d}
     \end{equation}
-    holder class, bias, variance, risk, concentration
-
-\subsection*{Nonparametric Classification}
-    classifiers: plug-in, histogram, decision trees
+    Note: $a_n \asymp b_n$ means $a_n/b_n$ and $b_n/a_n$ are bounded for large $n$.\\
+    \textbf{Thm (kde risk bound):} If $h \asymp n^{-1/(2\beta + d)}$ then
+    \begin{equation}
+        \sup_{p \in H_b(L)} \mathbb{E} \left( \int (\hat{p}_h(x) - p(x))^2 dx \right) 
+        \leq \frac{c}{n^{2\beta/(2\beta+d)}}
+    \end{equation}
+    When $\beta=2$ and $h \asymp n^{-1/(4+d)}$, the bound has rate $n^{-4/(4+d)}$.\\
+    \textbf{Thm (kde concentration bound):} for small enough $\epsilon >0$,
+    \begin{equation}
+        \mathbb{P}(|\hat{p}_h(x) - \mathbb{E}(\hat{p}_h(x))| > \epsilon) 
+            \leq 2 e^{-cnh^d \epsilon^2}
+    \end{equation}
+    \textbf{Corr 1:} $\forall \epsilon>0$ and some constants $C$ and $c$,
+    \begin{equation}
+        \sup_{p \in H_{\beta}(L)} \mathbb{P} \left( | \hat{p}_h(x) - p(x) | > \sqrt{ \frac{C\text{log}(2/\epsilon)}{nh^d} } + ch^{\beta} \right)
+            < \epsilon
+    \end{equation}
+    \textbf{Corr 2:} If $h \asymp n^{-1/(2\beta + d)}$ then $\forall \epsilon >0$,
+    \begin{equation}
+        \sup_{p \in H_{\beta}(L)} \mathbb{P} \left( | \hat{p}_h(x) - p(x) |^2 > \frac{c}{n^{2\beta/(2\beta + d)}} \right)
+            < \epsilon
+    \end{equation}
+    We also proved that $O(n^{-2\beta/(2\beta + d)})$ is minimax optimal rate.
 
 \subsection*{Nonparametric Regression}
-    regressors: kernel estimators, local polynomials, RKHS estimators
+    The goal is to estimate $m(x) = \mathbb{E}(Y|X=x)$ with estimator $\hat{m}(x)$\\
+    The \emph{pointwise risk} is $R(\hat{m}(x) - m(x)) = \mathbb{E}((\hat{m}(x) - m(x))^2)$.\\
+    The \emph{predictive risk} is $R(\hat{m},m) = \mathbb{E}((Y - \hat{m}(X))^2)$ \\
+        \newlinetab $=$ $\sigma^2 + \mathbb{E}\left( \int(m(x) - \hat{m}(x))^2 dP(x) \right)$.
 
-\subsection*{Minimax}
-    Minimax risk definition\\
-    Upper bound risk\\
-    Lower bound risk (Le Cam and Fano)
+    \textbf{Kernel estimator:} $\hat{m}_h(x) = \frac{\sum_i Y_i K\left(\frac{\|x-X_i\|}{h}\right)}{\sum_i K\left(\frac{\|x-X_i\|}{h}\right)}$ \\
+    If $X_i,\ldots,X_n \sim p(x)$ s.t. $0 < c \leq p(x) \leq C$,
+    $p$ has bnded cont's 1st derivs, $m$ has bnded cont's 3rd derivs, then\\
+    \textbf{(a) Bias:} $\left| \mathbb{E}(\hat{m}_h(x)) - m(x) \right| \leq c_1 h^4$\\
+    \textbf{(b) Variance:} $\text{Var}(\hat{m}_h(x)) \leq \frac{c_2}{nh^d}$\\
+    \textbf{(c) Risk:} If $h \asymp n^{-1/(4+d)}$, 
+        $\mathbb{E}\left( (\hat{m}_h(x) - m(x))^2 \right) \leq \frac{c}{n^{4/(4+d)}}$\\
+    %\textbf{Local polynomial estimator:} \\
+    %\textbf{RKHS estimator:}
+
+\subsection*{Nonparametric Classification}
+    The goal is to analyze nonparametric classifiers $\hat{h}(X)$.\\
+    The \emph{classification risk} is $R(h) = \mathbb{P}(Y \neq h(X))$. 
+    This is minimized by \emph{Bayes classifier} $h^*(x) = 1$ if $m(x) = \mathbb{E}(Y|X=x) > 1/2$, 0 o.w.\\
+    \textbf{Plug in classifier:} Estimate $m(x)$ with nonparametric regression estimate $\hat{m}(x)$, then plug into Bayes classifier.\\
+    \textbf{Histogram classifier:} $\mathcal{H}_m = \{$uniform partitions into $m^d$ bins$\}$. Can bound $R(\hat{h}) - R(h^*)$ with VC Thm, 
+        using $\text{VC}(\mathcal{H}_m) = m^d$\\
+    \textbf{Decision tree classifier:} $\mathcal{T}_k = \{$decision trees with $k$ leaves$\}$.\\
+        Can bound $R(\hat{t}) - R(t^*)$ with VC Thm, using $\text{VC}(\mathcal{T}_k) = k(d+1)$.
+
+%\subsection*{Minimax}
+    %Minimax risk definition\\
+    %Upper bound risk\\
+    %Lower bound risk (Le Cam and Fano)
+\subsection*{Minimax Lower Bounds}
+        Components:
+    \begin{enumerate}
+        \itemsep-.5em
+        \item Class of models $\mathcal{F} \subseteq \mathcal{S}$, where $\mathcal{F}$ contains the ``true'' model.
+        \item Observation model $\mathcal{P}_f$, where $f \in \mathcal{F}; \mathcal{P}_f$ is the distribution of the data under model $f$.
+        \item Performance metric $d(\ldots) \geq 0$.
+    \end{enumerate}
+    Then, the maximal risk is given by 
+    \begin{equation}
+        \underset{f\in \mathcal{F}}{\sup} \; \mathbb{E}_f \left[d(\hat{f}_n,f)\right] = \underset{f\in\mathcal{F}}{\sup} \int d(\hat{f}_n(Z),f)d\mathcal{P}_f(Z).
+    \end{equation}
+    Goal: $\mathcal{R}^*_n := \underset{\hat{f}_n}{\inf}\,\underset{f\in\mathcal{F}}{\sup} \,\mathbb{E} \left[d(\hat{f}_n,f)\right] \geq cs_n$.\\
+    General reduction scheme: $\underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}}{\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n) \geq c > 0$.
+    \begin{enumerate}
+        \item Replace $\mathcal{F}$ with smaller finite class $\lbrace f_0,\ldots,f_M \rbrace \subseteq \mathcal{F}$. Note: $\underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}}{\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n) \geq \underset{\hat{f}_n}{\inf} \; \underset{f \in \lbrace f_0,\ldots,f_M \rbrace}{\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n)$.
+        \item Reduce to a hypothesis test: $\underset{\hat{f}_n}{\inf} \; \underset{f \in \mathcal{F}}{\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n) \geq \underset{\hat{f}_n}{\inf} \; \underset{f \in \lbrace f_0,\ldots,f_M \rbrace}{\sup} \; \mathcal{P}_{f_j}(\hat{h}_n(Z) \neq j)$, where $\hat{h}_n : \mathcal{Z} \rightarrow \lbrace 0,\ldots,M \rbrace$.
+    \end{enumerate}
+    \textbf{Lemma 1} Suppose $d(\cdot,\cdot)$ is a semi-distance (i.e., it satisfies 
+    \begin{inparaenum}
+    \item $d(f,g) = d(g,f) \geq 0$,
+    \item $d(f,f) = 0$,
+    \item $d(f,g) \geq d(h,f) + d(h,g)$
+    \end{inparaenum}
+    ). Suppose $f_0,\ldots,f_M$ is s.t. $d(f_j,f_k) \geq 2s_n \, \forall j \neq k$ and $\Psi^* := \arg \underset{j}{\min} \; d(\hat{f}_n,f,f_j)$. Then, $\Psi^*(\hat{f}_n) \neq j \Rightarrow d(\hat{f}_n,f_j) \geq s_n$.\\
+    \textbf{Le Cam's Lemma:} Let $\mathcal{F}$ be a class of models, $Z^n$ iid data from $\mathcal{P}_f$, where $f\in\mathcal{F}$ is the true model. If $d$ is a semi-distance and $f_0,f_1 \in \mathcal{F}$ s.t. $d(f_0,f_1) \geq 2s_n$, then 
+    \begin{equation}
+        \underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}} {\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n) \geq \frac{1}{4} \exp\lbrace-K(P^n_{f_1} || P^n_{f_0})\rbrace.
+    \end{equation}
+    \textbf{Corollary} $\underset{\hat{f}_n}{\inf} \; \underset {f\in\mathcal{F}}{\sup} \; \mathbb{E} \lbrack d(\hat{f}_n,f)\rbrack \geq cs_n$.\\
+    \textbf{Fano's Lemma:} If $d$ is a semi-distance, $\lbrace f_0,\ldots,f_M \rbrace$ s.t. $d(f_j,f_k) \geq 2s_n \, \forall j \neq k \; (M \geq 2)$, and $\frac{1}{M}\sum_{j=1}^{M} K(P_j||P_0) \leq \alpha \log M \; (0 < \alpha < 1/8)$, then
+    \begin{equation}
+        \underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}}{\sup} \; P_f(d(\hat{f}_n,f) \geq s_n) \geq \beta = \frac{\sqrt{M}}{1+\sqrt{M}}\left(1 - 2\alpha - 2\sqrt{\frac{\alpha}{\log M}}\right) > 0
+    \end{equation}
+
+
+
+
+
 
 \end{document}
