@@ -209,7 +209,7 @@
     We also proved that $O(n^{-2\beta/(2\beta + d)})$ is minimax optimal rate.
 
 \subsection*{Nonparametric Regression}
-    The goal is to estimate $m(x) = \mathbb{E}(Y|X=x)$ with estimator $\hat{m}(x)$\\
+    The goal is to estimate $m(x) = \mathbb{E}(Y|X=x)$ with estimator $\hat{m}(x)$.\\
     The \emph{pointwise risk} is $R(\hat{m}(x) - m(x)) = \mathbb{E}((\hat{m}(x) - m(x))^2)$.\\
     The \emph{predictive risk} is $R(\hat{m},m) = \mathbb{E}((Y - \hat{m}(X))^2)$ \\
         \newlinetab $=$ $\sigma^2 + \mathbb{E}\left( \int(m(x) - \hat{m}(x))^2 dP(x) \right)$.
@@ -234,11 +234,15 @@
     \textbf{Decision tree classifier:} $\mathcal{T}_k = \{$decision trees with $k$ leaves$\}$.\\
         Can bound $R(\hat{t}) - R(t^*)$ with VC Thm, using $\text{VC}(\mathcal{T}_k) = k(d+1)$.
 
-%\subsection*{Minimax}
-    %Minimax risk definition\\
-    %Upper bound risk\\
-    %Lower bound risk (Le Cam and Fano)
-\subsection*{Minimax Lower Bounds}
+\subsection*{Minimax}
+    The \textbf{minimax risk} for a set of distributions $\mathcal{P}$ and metric $d$ is
+    \begin{equation}
+       R_n(\mathcal{P}) = \inf_{\hat{\theta}}  \sup_{P \in \mathcal{P}} \mathbb{E}_P [ d(\hat{\theta}, \theta(P))  ]
+    \end{equation}
+    The \textbf{sample complexity} $n(\epsilon,\mathcal{P}) = \text{min}\{n : R_n(\mathcal{P}) \leq \epsilon\}$.\\
+    The \textbf{KL Divergence} between distributions $P$ and $Q$ is $KL(P,Q) = \int p \text{ log}(p/q)$.
+
+\subsubsection*{Minimax Lower Bounds}
         Components:
     \begin{enumerate}
         \itemsep-.5em
