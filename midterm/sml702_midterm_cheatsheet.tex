@@ -125,20 +125,33 @@
             \leq 2\text{Rad}_n(\mathcal{F}) + \sqrt{\frac{1}{2n} \text{log} \left( \frac{2}{\delta} \right)}
     \end{equation}
 
+    \textbf{Covering number:} For measure $Q$ and $p\geq 1$, $\|f\|_{L_p(Q)}$ $=$ $\left( \int |f(x)|^p dQ(x) \right)^{1/p}$.
+    $\mathcal{C} = \{ f_1,\ldots,f_N \}$ is an $\epsilon$-cover of $\mathcal{F}$ if $\forall f \in \mathcal{F}$ $\exists f_j \in \mathcal{C}$ 
+    s.t. $\| f - f_j  \|_{L_p(Q)} < \epsilon$. The \textbf{covering number} $N_p(\epsilon,\mathcal{F},Q)$ is the size of the smallest 
+    $\epsilon$-cover, and $N_p(\epsilon,\mathcal{F}) = \sup_Q N_p(\epsilon,\mathcal{F},Q)$.
+
+    \textbf{Thm:} if $\| f \|_{\infty} \leq B$ for all $f \in \mathcal{F}$, then
+    \begin{equation}
+        \mathbb{P}\left( \sup_{f \in \mathcal{F}} |P_n(f) - P(f)| > \epsilon \right) 
+        \leq 2N(\epsilon/3, \mathcal{F}, L_{\infty}) e^{-n\epsilon^2 / (18B^2)}
+    \end{equation}
+
 \subsection*{Function Spaces}
     A \textbf{vector space} is closed under addition and scalar multiplication. 
     A vector space of functions is a \textbf{function space}. 
     A normed space is \textbf{complete} if every \emph{Cauchy sequence} converges to a limit. 
     A complete, normed space is a \textbf{Banach space}.\\
     \textbf{Inner product}: a mapping $\langle\cdot,\cdot\rangle: V \times V \rightarrow \mathbb{R} \; \text{s.t.} \; \forall x,y,z \in V, a \in \mathbb{R}:$
-    \begin{enumerate}
-        \itemsep-.5em
-        \item $\langle x,x \rangle \geq 0, \langle x,x \rangle = 0 \Leftrightarrow x = 0$
-        \item $\langle x,y+z \rangle  = \langle x,y \rangle + \langle x,z \rangle$
-        \item $\langle x, ay \rangle = a\langle x,y \rangle$
-        \item $\langle x,y \rangle = \langle y,x \rangle$.
-    \end{enumerate}
-    \vspace{-3mm}Note that $\|v\| = \sqrt{\langle v,v  \rangle}$.
+    (1) $\langle x,x \rangle \geq 0, \langle x,x \rangle = 0 \Leftrightarrow x = 0$ (2) $\langle x,y+z \rangle  = \langle x,y \rangle + \langle x,z \rangle$ \\
+    (3) $\langle x, ay \rangle = a\langle x,y \rangle$ (4) $\langle x,y \rangle = \langle y,x \rangle$. Note that $\|v\| = \sqrt{\langle v,v  \rangle}$.
+    %\begin{enumerate}
+        %\itemsep-.5em
+        %\item $\langle x,x \rangle \geq 0, \langle x,x \rangle = 0 \Leftrightarrow x = 0$
+        %\item $\langle x,y+z \rangle  = \langle x,y \rangle + \langle x,z \rangle$
+        %\item $\langle x, ay \rangle = a\langle x,y \rangle$
+        %\item $\langle x,y \rangle = \langle y,x \rangle$.
+    %\end{enumerate}
+    %\vspace{-3mm}Note that $\|v\| = \sqrt{\langle v,v  \rangle}$.
 
     A complete, inner product space is a \textbf{Hilbert space}. % (also a normed space).
     A Hilbert space is \textbf{separable} if there exists a countable orthonormal basis.
@@ -187,7 +200,7 @@
     Note: $a_n \asymp b_n$ means $a_n/b_n$ and $b_n/a_n$ are bounded for large $n$.\\
     \textbf{Thm (kde risk bound):} If $h \asymp n^{-1/(2\beta + d)}$ then
     \begin{equation}
-        \sup_{p \in H_b(L)} \mathbb{E} \left( \int (\hat{p}_h(x) - p(x))^2 dx \right) 
+        \sup_{p \in H_{\beta}(L)} \mathbb{E} \left( \int (\hat{p}_h(x) - p(x))^2 dx \right) 
         \leq \frac{c}{n^{2\beta/(2\beta+d)}}
     \end{equation}
     When $\beta=2$ and $h \asymp n^{-1/(4+d)}$, the bound has rate $n^{-4/(4+d)}$.\\
@@ -271,15 +284,24 @@
     \begin{equation}
         \underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}} {\sup} \; \mathcal{P}_f(d(\hat{f}_n,f) \geq s_n) \geq \frac{1}{4} \exp\lbrace-K(P^n_{f_1} || P^n_{f_0})\rbrace.
     \end{equation}
-    \textbf{Corollary} $\underset{\hat{f}_n}{\inf} \; \underset {f\in\mathcal{F}}{\sup} \; \mathbb{E} \lbrack d(\hat{f}_n,f)\rbrack \geq cs_n$.\\
+    \textbf{Corollary} $\underset{\hat{f}_n}{\inf} \; \underset {f\in\mathcal{F}}{\sup} \; \mathbb{E} \lbrack d(\hat{f}_n,f)\rbrack \geq cs_n$.
+    
+    \textbf{Le Cam Again:} $\mathcal{P}$ a set of distributions, $P_0, P_1 \in \mathcal{P}$. Then 
+    \begin{equation}
+        \inf_{\hat{\theta}} \sup_{P \in \mathcal{P}} \mathbb{E}_P[d(\hat{\theta}, \theta(P))] \geq \frac{d(P_0,P_1)}{8} e^{-n \text{KL}(P_0,P_1)}
+    \end{equation}
+
     \textbf{Fano's Lemma:} If $d$ is a semi-distance, $\lbrace f_0,\ldots,f_M \rbrace$ s.t. $d(f_j,f_k) \geq 2s_n \, \forall j \neq k \; (M \geq 2)$, and $\frac{1}{M}\sum_{j=1}^{M} K(P_j||P_0) \leq \alpha \log M \; (0 < \alpha < 1/8)$, then
     \begin{equation}
         \underset{\hat{f}_n}{\inf} \; \underset{f\in\mathcal{F}}{\sup} \; P_f(d(\hat{f}_n,f) \geq s_n) \geq \beta = \frac{\sqrt{M}}{1+\sqrt{M}}\left(1 - 2\alpha - 2\sqrt{\frac{\alpha}{\log M}}\right) > 0
     \end{equation}
 
-
-
-
+    \textbf{Fano's Again:} $F = \{P_1,\ldots,P_N\} \subset \mathcal{P}$, then
+    \begin{equation}
+        \inf_{\hat{\theta}} \sup_{P \in \mathcal{P}} \mathbb{E}_P[d(\hat{\theta}, \theta(P))] 
+        \geq \frac{\alpha}{2}\left( 1 - \frac{n\beta + \text{log }2}{\text{log }N}  \right)
+    \end{equation}
+    where $\alpha = \text{min}_{j \neq k}(\theta(P_j), \theta(P_k))$ and $\beta = \text{max}_{j \neq k} \text{KL}(P_j,P_k)$.
 
 
 \end{document}
